@@ -21,7 +21,7 @@ SCRIPT_BASE_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 function cleanup() {
   cd "${SCRIPT_BASE_DIR}"
-  rm --force --verbose \
+  rm -f -v \
     cert/localhost.{crt,key} \
     upload/{image.jpg,text.txt} || \
     echo "warning: failed to remove some test resources"
@@ -29,8 +29,8 @@ function cleanup() {
 
 # Generates a private key and a self-signed certificate for FTPS
 function generate_private_key_and_certificate_for_ftps() {
-  mkdir --parents --verbose cert
-  rm --force --verbose cert/localhost.{crt,key}
+  mkdir -p -v cert
+  rm -f -v cert/localhost.{crt,key}
   openssl req -x509 -out cert/localhost.crt -keyout cert/localhost.key \
     -newkey rsa:2048 -nodes -sha256 \
     -subj '/CN=localhost' -extensions EXT -config <( \
@@ -38,9 +38,7 @@ function generate_private_key_and_certificate_for_ftps() {
 }
 
 function generate_test_files() {
-  mkdir --mode=777 --parents --verbose upload
-  convert -size 32x32 xc:white upload/image.jpg
-  echo "foobar" > upload/text.txt
+  mkdir -m 777 -p -v upload
 }
 
 function remove_previously_known_localhost_sftp_host_key() {

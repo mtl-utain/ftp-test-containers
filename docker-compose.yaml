@@ -27,7 +27,8 @@ services:
       - TLS_KEY=/etc/custom-cert/localhost.key
     volumes:
       - ./cert:/etc/custom-cert
-      - ./upload:/home/ftpuser
+      - ./config/vsftpd.conf:/etc/vsftpd/vsftpd.conf
+      # - ./upload:/home/ftpuser
 
   # See https://hub.docker.com/r/atmoz/sftp
   sftp:
